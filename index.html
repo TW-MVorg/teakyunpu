@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鮭魚 @teakyunpu | 創作者數位檔案與歷史動態典藏庫</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==========================================
+           全域現代化重設與動態載入優化
+           ========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        /* 網頁主架構（配置流暢進場動畫） */
+        .wrapper {
+            width: 100%;
+            max-width: 800px;
+            padding: 60px 20px;
+            animation: fadeInUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        /* ==========================================
+           頂部看板區塊 (Hero Section)
+           ========================================== */
+        .hero-panel {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            margin-bottom: 30px;
+        }
+
+        .avatar-text-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 1px solid #dbeafe;
+        }
+
+        .hero-panel h1 {
+            font-size: 2rem;
+            color: #0f172a;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.4;
+        }
+
+        .hero-panel .subtitle {
+            font-size: 1.05rem;
+            color: #64748b;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        /* 數據核心面板 */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        .metric-card {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px 15px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .metric-card:hover {
+            background-color: #ffffff;
+            border-color: #cbd5e1;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.03);
+            transform: translateY(-2px);
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .metric-label {
+            font-size: 0.82rem;
+            color: #64748b;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
+        /* ==========================================
+           即時警報橫幅 (Live Alert Banner)
+           ========================================== */
+        .status-alert-banner {
+            background-color: #fef2f2;
+            border: 1px solid #fee2e2;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 35px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            text-align: left;
+        }
+
+        .status-alert-banner i {
+            color: #ef4444;
+            font-size: 1.3rem;
+            margin-top: 3px;
+        }
+
+        .alert-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #991b1b;
+            margin-bottom: 4px;
+        }
+
+        .alert-desc {
+            font-size: 0.88rem;
+            color: #b91c1c;
+            line-height: 1.6;
+        }
+
+        /* ==========================================
+           內容區塊通用核心結構 (Section Blocks)
+           ========================================== */
+        .content-block {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            text-align: left;
+        }
+
+        .block-header {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 12px;
+        }
+
+        .block-header i {
+            color: #2563eb;
+        }
+
+        /* ==========================================
+           時間軸深入排版 (Expanded Timeline)
+           ========================================== */
+        .expanded-timeline {
+            position: relative;
+            padding-left: 25px;
+            border-left: 2px solid #e2e8f0;
+            margin-left: 10px;
+        }
+
+        .timeline-node {
+            position: relative;
+            margin-bottom: 35px;
+            transition: transform 0.2s ease;
+        }
+
+        .timeline-node:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-node:hover {
+            transform: translateX(3px);
+        }
+
+        .node-circle {
+            position: absolute;
+            left: -32px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #2563eb;
+            border: 3px solid #ffffff;
+            box-shadow: 0 0 0 2px #2563eb;
+            transition: background-color 0.2s ease;
+        }
+
+        .timeline-node:hover .node-circle {
+            background-color: #1d4ed8;
+        }
+
+        .node-circle.danger {
+            background-color: #ef4444;
+            box-shadow: 0 0 0 2px #ef4444;
+        }
+
+        .timeline-node:hover .node-circle.danger {
+            background-color: #b91c1c;
+        }
+
+        .node-tag {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #2563eb;
+            background-color: #eff6ff;
+            padding: 3px 10px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .node-tag.danger {
+            color: #ef4444;
+            background-color: #fef2f2;
+        }
+
+        .node-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .node-text {
+            font-size: 0.9rem;
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        /* ==========================================
+           聲明檔案庫雙重平舖 (Statement Archive)
+           ========================================== */
+        .statement-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .statement-item-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid #3b82f6;
+            border-radius: 0 12px 12px 0;
+            padding: 25px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .statement-item-box:hover {
+            background-color: #ffffff;
+            border-color: #cbd5e1;
+            border-left-color: #2563eb;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+            transform: translateX(4px);
+        }
+
+        .statement-meta {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .statement-p {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: #334155;
+        }
+
+        /* ==========================================
+           互動導流區塊 (Call To Action)
+           ========================================== */
+        .cta-block {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            margin-bottom: 40px;
+        }
+
+        .cta-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        .cta-p {
+            font-size: 0.88rem;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .mega-functional-btn {
+            width: 100%;
+            max-width: 400px;
+            background-color: #22c55e;
+            color: #ffffff;
+            border: none;
+            padding: 16px 20px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.25);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+        }
+
+        .mega-functional-btn:hover {
+            background-color: #16a34a;
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .mega-functional-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.15);
+        }
+
+        /* ==========================================
+           頁尾技術規格宣告 (Footer)
+           ========================================== */
+        footer {
+            border-top: 1px solid #e2e8f0;
+            padding-top: 25px;
+            width: 100%;
+            font-size: 0.82rem;
+            color: #64748b;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .tech-specs {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            margin-top: 4px;
+        }
+
+        /* ==========================================
+           智慧響應式版面配置微調
+           ========================================== */
+        @media (max-width: 640px) {
+            .wrapper {
+                padding: 30px 12px;
+            }
+            .hero-panel {
+                padding: 35px 20px;
+            }
+            .hero-panel h1 {
+                font-size: 1.6rem;
+            }
+            .content-block {
+                padding: 25px 20px;
+            }
+            .metrics-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .statement-item-box {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        
+        <div class="hero-panel">
+            <div class="avatar-text-icon">
+                <i class="fa-solid fa-database"></i>
+            </div>
+            <h1>鮭魚 🍣 綁定數位動態典藏誌</h1>
+            <div class="subtitle">使用者識別：@teakyunpu &bull; 公開數據指標與歷史事件存檔庫</div>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">150,000+</div>
+                    <div class="metric-label">最高關注人數</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">個人創作</div>
+                    <div class="metric-label">核心定位分類</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">暫停運營</div>
+                    <div class="metric-label">當前最新狀態</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-alert-banner">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div class="alert-content">
+                <div class="alert-title">平台數據同步狀態</div>
+                <div class="alert-desc">
+                    目前經多方查證與數據比對，該創作者之官方主帳號已確認完成註銷或關閉。於平台內直接檢索將顯示「找不到此帳號」之提示。
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <div class="block-header">
+                <i class="fa-solid fa-chart-line"></i> 頻道發展進程軌跡
+            </div>
+            
+            <div class="expanded-timeline">
+                <div class="timeline-node">
+                    <div class="node-circle"></div>
+                    <div class="node-tag">里程碑</div>
+                    <div class="node-title">社群高流量積累</div>
+                    <div class="node-text">
+                        於短影音平台上發布個人核心影音創作，作品具備高度社群擴散力，短時間內迅速凝聚大批擁護者，成功跨越 15 萬粉絲之關注門檻。
+                    </div>
+                </div>
+                
+                <div class="timeline-node">
+                    <div class="node-circle"></div>
+                    <div class="node-tag">社群熱搜</div>
+                    <div class="node-title">特定影音作品引發大眾效應</div>
+                    <div class="node-text">
+                        在運營階段中，因其特定的個人舞蹈創作影片（內容涉及展現或露出肚子等動態動作）在全網引發海量傳播，甚至進一步吸引新聞媒體的跟進與報導，使「跳舞露肚上新聞」及「不開美顏照片」等詞彙成為當時平台的指標性關聯搜尋關鍵字。
+                    </div>
+                </div>
+                
+                <div class="timeline-node">
+                    <div class="node-circle danger"></div>
+                    <div class="node-tag danger">當前公告</div>
+                    <div class="node-title">外部輿論壓力與終止更新</div>
+                    <div class="node-text">
+                        面對全網高強度的關注與大眾針對美顏效果的容貌審視，創作者在面臨顯著的心理負擔、個人信心掙扎與自我調節考量下，最終對外發布正式聲明，決定全面暫停影片發布工作並隱藏帳號，進入沉澱階段。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <div class="block-header">
+                <i class="fa-solid fa-quote-left"></i> 官方發布公告存檔
+            </div>
+            
+            <div class="statement-grid">
+                <div class="statement-item-box">
+                    <div class="statement-meta">
+                        <i class="fa-solid fa-bullhorn"></i> 動態更新公告摘要
+                    </div>
+                    <div class="statement-p">
+                        創作者曾於社群群組公開發表自白，明確向追隨者致歉，並正式指出未來將無限期停止於平台上發布任何新的短影音內容。
+                    </div>
+                </div>
+                
+                <div class="statement-item-box">
+                    <div class="statement-meta">
+                        <i class="fa-solid fa-user-gear"></i> 心路歷程說明摘要
+                    </div>
+                    <div class="statement-p">
+                        聲明文中坦承，因影片拍攝時美顏濾鏡開較大，隨着關注度與流量的突飛猛進，在面對大眾時面臨了嚴重的焦慮與信心不足。在權衡「清空註銷」與「捨不得 15 萬關注者」的長期內心掙扎後，最終做出暫時抽離、沉澱自我的決定。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-block">
+            <div class="cta-title">協同編輯參與</div>
+            <div class="cta-p">若您擁有該創作者最新或更完整的公開事實資訊，歡迎隨時加入工作小組進行檔案補正。</div>
+            
+            <a href="https://band.us/n/a7afb08fA7S1K" target="_blank" class="mega-functional-btn">
+                <i class="fa-solid fa-users-gear"></i> 加入網站編輯群
+            </a>
+        </div>
+
+        <footer>
+            <div>&copy; 2026 版權所有 元界創想</div>
+            <div class="tech-specs">技術支援 羽央團隊 雲林機房</div>
+        </footer>
+
+    </div>
+
+</body>
+</html>
